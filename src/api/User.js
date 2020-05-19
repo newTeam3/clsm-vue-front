@@ -38,3 +38,7 @@ export const login = (params) => {
   return axios.post("/auth",params).then(res=>res);
 };
 
+export const getUser = () => {
+  return axios.get("/user").then(res=>res);
+
+};

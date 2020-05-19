@@ -88,20 +88,37 @@
 </template>
 
 <script>
+  import { getUser } from '../../api/User'
     export default {
         name: "Topnav",
       data() {
         return {
           activeIndex: '1',
-          activeIndex2: '1'
+          activeIndex2: '1',
+          userData:[]
         };
+      },
+      created() {
+        this.getData()
       },
       methods: {
         handleSelect(key, keyPath) {
           console.log(key, keyPath);
+        },
+        async  getData() {
+          userData()
+            .then(res => {
+              console.log("res:" + JSON.stringify(res.data))
+              if (res.status == 200) {
+                let par = JSON.stringify(res.data)
+                sessionStorage.setItem('user', par)
+                this.userData = res.data
+              }
+            })
         }
       }
     }
+
 </script>
 
 <style scoped>
