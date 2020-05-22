@@ -7,6 +7,9 @@ import Login from "../components/Login";
 import NotFound from "../components/NotFound";
 import Test from "../components/public/Test";
 
+import FindReport from "../components/report/FindReport";
+import Commit from "../components/report/Commit";
+
 Vue.use(Router);
 
 export default new Router({
@@ -24,6 +27,8 @@ export default new Router({
         //如果要使用props传参的方式，要添加props:true
         //用户菜单
         {path:'/test/test',name:'test',component:Test},
+        {path:'/report/findReport',component:FindReport},
+        {path:'/report/commit',name:'commit',component:Commit,props:true},
 
       ]
 

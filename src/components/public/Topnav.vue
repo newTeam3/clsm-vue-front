@@ -1,5 +1,5 @@
 <template>
-  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"  @select="handleSelect">
     <div class="logobox">
       <img class="logoimg" src="../../assets/logo1.png" alt="">
     </div>
@@ -69,6 +69,15 @@
       <el-menu-item index="3-2">选项2</el-menu-item>
       <el-menu-item index="3-3">选项3</el-menu-item>
     </el-submenu>
+    <el-submenu index="7">
+      <template slot="title">
+        <i class="el-icon-s-flag"></i><span slot="title">任务</span>
+      </template>
+      <el-menu-item index="7-1">
+        <router-link to="/report/findReport">报告</router-link>
+      </el-menu-item>
+      <el-menu-item index="7-2">签到</el-menu-item>
+    </el-submenu>
     <div class="search">
       <el-form >
         <el-input size="small" placeholder="请输入名称"
@@ -80,6 +89,7 @@
       <div class="demo-type">
         <div>
           <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="45" ></el-avatar>
+
         </div>
       </div>
     </template>
@@ -106,10 +116,10 @@
           console.log(key, keyPath);
         },
         async  getData() {
-          userData()
+          getUser()
             .then(res => {
-              console.log("res:" + JSON.stringify(res.data))
               if (res.status == 200) {
+                console.log(res.data.img);
                 let par = JSON.stringify(res.data)
                 sessionStorage.setItem('user', par)
                 this.userData = res.data
@@ -139,7 +149,7 @@
   .search{
     display: inline-block;
     line-height: 60px;
-    margin-right: -350px;
+    margin-right: -250px;
 
   }
   .el-badge__content.is-fixed {
@@ -149,4 +159,9 @@
     -webkit-transform: translateY(-50%) translateX(100%);
     transform: translateY(-50%) translateX(100%);
   }
+  a {
+    text-decoration: none;
+
+  }
+
 </style>
