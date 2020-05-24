@@ -65,9 +65,12 @@
       <template slot="title">
         <i class="el-icon-s-flag"></i><span slot="title">考试</span>
       </template>
-      <el-menu-item index="3-1">选项1</el-menu-item>
-      <el-menu-item index="3-2">选项2</el-menu-item>
-      <el-menu-item index="3-3">选项3</el-menu-item>
+      <el-menu-item index="6-1">
+        <router-link to="/answer/Answer_index">考试中心</router-link>
+      </el-menu-item>
+      <el-menu-item index="6-1">
+        <router-link to="/answer/Answer_My">我的考试</router-link>
+      </el-menu-item>
     </el-submenu>
     <el-submenu index="7">
       <template slot="title">
