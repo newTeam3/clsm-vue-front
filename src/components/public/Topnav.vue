@@ -91,7 +91,7 @@
     <template>
       <div class="demo-type">
         <div>
-          <el-avatar src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png" :size="45" ></el-avatar>
+          <el-avatar :src="this.avatarUrl" :size="45" ></el-avatar>
 
         </div>
       </div>
@@ -106,6 +106,7 @@
         name: "Topnav",
       data() {
         return {
+          avatarUrl:require("@/assets/img/avatar.jpg"),
           activeIndex: '1',
           activeIndex2: '1',
           userData:[]

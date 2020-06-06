@@ -158,6 +158,7 @@
                       plan:this.ruleForm.plan,
                       userVO:{id:this.uid},
                       task:{id:this.tid}};
+          this.loading=true
           console.log("uid:"+this.uid+"tid:"+this.tid+"work:"+this.ruleForm.work+"problem："+this.ruleForm.problem+"solve:"+this.ruleForm.solve)
           commit(para)
             .then(res => {
