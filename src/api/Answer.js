@@ -1,4 +1,6 @@
 import axios from "axios";
+
+
 export const findAllPaper = (params,param) => {
 
   return axios.get("/paper/findAllPaper?page="+params+"&size="+param).then(res=>res);
@@ -20,6 +22,19 @@ export const save = (params) => {
 };
 export const findAllExam = (params,param3,param,param2) => {
 
-  return axios.get("/exam/findAllExam?page="+params+"&size"+param3+"&username="+param+"&name="+param2).then(res=>res);
+  return axios.get("/exam/findAllExam?page="+params+"&rows="+param3+"&username="+param+"&name="+param2).then(res=>res);
+
+};
+export const save1 = (params,param1,param) => {
+
+  return axios.post("/answer/save1?uid="+params+"&paperId="+param1,param).then(res=>res);
+
+};
+export const findAll = (params,param) => {
+  return axios.get("/answer/findAll?uid="+params+"&paperId="+param).then(res=>res);
+
+};
+export const findExamSource = (params,param) => {
+  return axios.get("/exam/findExamSource?uid="+params+"&paperId="+param).then(res=>res);
 
 };

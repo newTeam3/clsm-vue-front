@@ -123,7 +123,7 @@
           getUser()
             .then(res => {
               if (res.status == 200) {
-                console.log(res.data.img);
+                console.log(res.data);
                 let par = JSON.stringify(res.data)
                 sessionStorage.setItem('user', par)
                 this.userData = res.data

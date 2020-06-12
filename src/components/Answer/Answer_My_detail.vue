@@ -54,9 +54,9 @@
               <div >
                 <br>
                 <div style="font-size: 17px;border: solid 1px red;">
-                <div v-if="(wor1.answer)==(wor1.option)" style="color: green;font-weight:bold;font-size: 20px " v-text="'正确'"></div>
-                <div v-if="(wor1.answer)!=(wor1.option)" style="color: red;font-weight:bold;font-size: 20px" v-text="'错误'"></div>
-                正确答案:<span v-text="wor1.answer"></span> 你的答案:<span v-text="wor1.option"></span></div>
+                <div v-if="(wor1.answer)==(wor1.options)" style="color: green;font-weight:bold;font-size: 20px " v-text="'正确'"></div>
+                <div v-if="(wor1.answer)!=(wor1.options)" style="color: red;font-weight:bold;font-size: 20px" v-text="'错误'"></div>
+                正确答案:<span v-text="wor1.answer"></span> 你的答案:<span v-text="wor1.options"></span></div>
               </div>
             </li>
           </ul>
@@ -73,7 +73,7 @@
 </template>
 
 <script>
-  import {findAllAnswer, findOne} from '@/api/Answer'
+  import {findAllAnswer, findOne,findAll,findExamSource} from '@/api/Answer'
 
   export default {
     name: "Answer",
@@ -88,7 +88,7 @@
         falg: false,
         loading: false,
         wor: [{
-          option: 'A',
+          options: 'A',
           questions: '多选',
           question: '题目内容',
           answer: 'D',
@@ -111,7 +111,8 @@
           username: '',
           paperName: '',
           score: '',
-          status: ''
+          status: '',
+          uid:1
         },
       }
     },
@@ -139,13 +140,19 @@
         var user = JSON.parse(sessionStorage.getItem("user"));
         this.exams.username = user.username;
         this.exams.name = user.name;
-        // console.log(this.exams.username+this.ruleForm.paperName);
-        var wor = JSON.parse(localStorage.getItem(this.exams.username+this.ruleForm.paperName));
-        var score = JSON.parse(localStorage.getItem(this.exams.username+this.ruleForm.paperName+'1'));
-        // console.log(wor);
-        this.wor=wor;
-        this.exams.score=score;
-      })
+        this.exams.uid = user.id;
+        // this.wor=wor;
+        // this.exams.score=score;
+        // console.log(this.exams)
+        findAll(this.exams.uid,this.$route.query.id).then(res => {
+          this.wor=res.data.paperDetail
+          // console.log(res.data);
+        });
+        findExamSource(this.exams.uid,this.$route.query.id).then(res=>{
+          // console.log(res.data);
+          this.exams.score=res.data.score;
+        })
+      });
 
     },
   }

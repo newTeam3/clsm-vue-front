@@ -111,11 +111,11 @@
     methods:{
       handleSizeChange(size){
         this.size = size;
-        this.search1(this.page,size);
+        this.findAll(this.page,size);
       },
       findPage(page) {
         this.page = page;
-        this.search1(page,this.size);
+        this.findAll(page,this.size);
       },
       findAll(page) {
         this.loading = true;

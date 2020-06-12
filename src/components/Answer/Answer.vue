@@ -30,7 +30,7 @@
         <div class="test_content_nr_main">
           <ul>
             <li class="option">
-              <input type="radio" v-model="wor1.option" v-bind:value="'A'" >
+              <input type="radio" v-model="wor1.options" v-bind:value="'A'" >
               <label>
                 A.
                 <p class="ue" style="display: inline;" v-text="wor1.optionA">在工具栏中点击“workflow”标签</p>
@@ -39,7 +39,7 @@
 
             <li class="option">
 
-              <input type="radio" v-model="wor1.option" v-bind:value="'B'">
+              <input type="radio" v-model="wor1.options" v-bind:value="'B'">
               <label>
                 B.
                 <p class="ue" style="display: inline;" v-text="wor1.optionB">在缺陷单界面中点击“推进流程”按钮</p>
@@ -48,7 +48,7 @@
 
             <li class="option">
 
-              <input type="radio" v-model="wor1.option" v-bind:value="'C'">
+              <input type="radio" v-model="wor1.options" v-bind:value="'C'">
               <label>
                 C.
                 <p class="ue" style="display: inline;" v-text="wor1.optionC">在缺陷单界面中点击“提交”按钮</p>
@@ -57,7 +57,7 @@
 
             <li class="option">
 
-              <input type="radio" v-model="wor1.option" v-bind:value="'D'">
+              <input type="radio" v-model="wor1.options" v-bind:value="'D'">
               <label>
                 D.
                 <p class="ue" style="display: inline;" v-text="wor1.optionD">后台启动流程推进</p>
@@ -65,11 +65,11 @@
               <div v-show="falg">
                 <br>
                 <div style="font-size: 17px;border: solid 1px red;">
-                  <div v-if="(wor1.answer)==(wor1.option)" style="color: green;font-weight:bold;font-size: 20px "
+                  <div v-if="(wor1.answer)==(wor1.options)" style="color: green;font-weight:bold;font-size: 20px "
                        v-text="'正确'"></div>
-                  <div v-if="(wor1.answer)!=(wor1.option)" style="color: red;font-weight:bold;font-size: 20px"
+                  <div v-if="(wor1.answer)!=(wor1.options)" style="color: red;font-weight:bold;font-size: 20px"
                        v-text="'错误'"></div>
-                  正确答案:<span v-text="wor1.answer"></span> 你的答案:<span v-text="wor1.option"></span></div>
+                  正确答案:<span v-text="wor1.answer"></span> 你的答案:<span v-text="wor1.options"></span></div>
               </div>
             </li>
           </ul>
@@ -90,7 +90,7 @@
 </template>
 
 <script>
-  import {findAllAnswer, findOne, save} from '@/api/Answer'
+  import {findAllAnswer, findOne, save,save1} from '@/api/Answer'
 
   export default {
     name: "Answer",
@@ -105,7 +105,7 @@
         falg: false,
         loading: false,
         wor: [{
-          option: 'A',
+          options: 'A',
           questions: '多选',
           question: '题目内容',
           answer: 'D',
@@ -116,6 +116,7 @@
           optionD: 'D',
         },],
         ruleForm: {
+          id:2,
           totalScore: '',
           time: '',
           name: '',
@@ -124,12 +125,13 @@
           paperName: ''
         },
         exams: {
-          bankId:'',
+          bankId:1,
           name: '',
           username: '',
           paperName: '',
           score: '',
-          status: ''
+          status: '',
+          uid:4
         },
       }
     },
@@ -167,7 +169,7 @@
         this.flag = true;
         let j = 0;
         for (let i = 0; i < this.wor.length; i++) {
-          if (this.wor[i].option == this.wor[i].answer) {
+          if (this.wor[i].options == this.wor[i].answer) {
             // console.log("正确")
             j++;
           } else {
@@ -202,15 +204,22 @@
           }
         });
         // console.log(this.wor);
-        let wor = JSON.stringify(this.wor);
-        let score = JSON.stringify(this.exams.score);
-        // console.log(wor);
+        // let wor = JSON.stringify(this.wor);
+        // let score = JSON.stringify(this.exams.score);
+        // console.log(this.wor);
+        // console.log(this.exams.score);
+        // this.wor.score=this.exams.score;
+        console.log(this.wor);
+        console.log(this.exams.uid);
+        save1(this.exams.uid,this.ruleForm.id,this.wor).then(res=>{
+           console.log(res.data)
+        })
         // sessionStorage.setItem(this.exams.username+this.ruleForm.paperName, wor);
-        window.localStorage.setItem(this.exams.username + this.ruleForm.paperName, wor);
-        window.localStorage.setItem(this.exams.username + this.ruleForm.paperName + '1', score);
+        // window.localStorage.setItem(this.exams.username + this.ruleForm.paperName, wor);
+        // window.localStorage.setItem(this.exams.username + this.ruleForm.paperName + '1', score);
       },
       findAll(paperNum,bankId) {
-        this.loading = false;
+        this.loading = true;
 
         if (paperNum) {
           this.ruleForm.paperNum = paperNum;
@@ -239,11 +248,12 @@
         this.minutes = res.data.time;
         this.findAll(res.data.paperNum,res.data.bankId)
       })
-      this.loading = true;
+
       var user = JSON.parse(sessionStorage.getItem("user"));
       // console.log(user);
       this.exams.username = user.username;
       this.exams.name = user.name;
+      this.exams.uid=user.id;
     },
     mounted() {
 
