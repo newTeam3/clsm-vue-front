@@ -98,8 +98,9 @@
       <el-form-item label="头像"   label-width="120px">
         <el-upload
           class="avatar-uploader img"
-          action="http://localhost:22100/filesystem/upload"
+          action="http://localhost:8080/filesystem/upload"
           name="file"
+          :headers="token"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload">
@@ -257,7 +258,7 @@
           this.editForm.img=URL.createObjectURL(file.raw)
           this.addForm.img = "http://120.79.195.245/"+res.fileId;
           this.editForm.img = "http://120.79.195.245/"+res.fileId;
-          // console.log("vv"+this.editForm.img)
+          console.log("vv"+this.editForm.img)
         },
         beforeAvatarUpload(file){
           const isJPG = file.type === 'image/jpeg'
