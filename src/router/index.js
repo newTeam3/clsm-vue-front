@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import Topnav from "../components/public/Topnav";
 
 import Index from "../components/Index";
 import Login from "../components/Login";
@@ -75,6 +75,12 @@ export default new Router({
       path:'/login',
       name:'login',
       component:Login,
+
+    },
+    {
+      path:'/Topnav',
+      name:'Topnav',
+      component:Topnav,
 
     },
     //重定向

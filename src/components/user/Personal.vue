@@ -95,8 +95,20 @@
           </el-option>
         </el-select>
       </el-form-item>
+      <el-form-item label="头像"   label-width="120px">
+        <el-upload
+          class="avatar-uploader img"
+          action="http://localhost:22100/filesystem/upload"
+          name="file"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="editForm.img" :src="editForm.img" class="avatar" height="160" width="180">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
       <el-form-item label="所属学院" prop="coid">
-        <el-select v-model="editForm.coid" clearable placeholder="请选择所属学院" size="small">
+        <el-select v-model="editForm.coid" clearable placeholder="请选择所属学院" size="small" @change="currentSel">
           <el-option
             v-for="(item,index) in selectData.college"
             :key="item.id"
@@ -129,9 +141,9 @@
 
   <el-dialog title="上传头像" :visible.sync="editFormVisible2" width="30%" @click="closeDialog" center>
     <el-form label-width="120px" :model="editForm"  ref="editForm">
-      <el-form-item label="头像">
+      <el-form-item label="头像" >
         <el-upload
-          class="avatar-upload"
+          class="avatar-upload img"
           action="http://localhost:8080/filesystem/upload"
           name="file"
           :auto-upload="false"
@@ -217,11 +229,14 @@
         this.getSearch()
       },
       methods:{
+        currentSel(){
+          this.editForm.cid=''
+        },
          async getData(param){
            findUserByID(param).then(res=>{
               if(res.status==200){
                 this.userData=res.data
-                console.log("user"+JSON.stringify(this.userData))
+                // console.log("user"+JSON.stringify(this.userData))
               }
            })
           },
@@ -242,7 +257,7 @@
           this.editForm.img=URL.createObjectURL(file.raw)
           this.addForm.img = "http://120.79.195.245/"+res.fileId;
           this.editForm.img = "http://120.79.195.245/"+res.fileId;
-          console.log("vv"+this.addForm.img)
+          // console.log("vv"+this.editForm.img)
         },
         beforeAvatarUpload(file){
           const isJPG = file.type === 'image/jpeg'
@@ -257,6 +272,7 @@
           return isJPG && isLt1M
         },
         updateData () {
+           // console.log(this.editForm.img);
           this.$refs.editForm.validate(valid => {
             if (valid) {
               this.$confirm("确认修改吗?", "提示", {}).then(() => {
@@ -267,6 +283,7 @@
                   sex:this.editForm.sex,
                   cid:this.editForm.cid,
                   coid:this.editForm.coid,
+                  img:this.editForm.img,
                   };
                 console.log(para)
                 // para.birth = !para.birth || para.birth == "" ? "" : date.formatDate.format(new Date(para.birth), "yyyy-MM-dd");
@@ -277,11 +294,13 @@
                       message: "提交成功",
                       type: "success"
                     });
+                    // location. reload()
+                    location. reload()
                     this.$refs["editForm"].resetFields();
                     this.editFormVisible = false;
                     let param={id:this.editForm.id}
                     this.getData(param);
-                    console.log("success")
+                    // console.log("success")
                   }else{
                     this.$message({
                       message: "提交失败",
@@ -351,4 +370,5 @@
     margin-right: 400px;
     opacity: 0.8;
      }
+
 </style>
