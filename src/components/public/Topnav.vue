@@ -5,22 +5,19 @@
     </div>
     <el-menu-item index="1">
       <template slot="title">
-      <i class="el-icon-s-home"></i><span slot="title">首页</span>
+      <i class="el-icon-s-home"></i><span slot="title"><router-link to="/test/test">首页</router-link></span>
       </template>
     </el-menu-item>
     <el-submenu index="2">
       <template slot="title">
         <i class="el-icon-s-order"></i><span slot="title">我的日周报</span>
       </template>
-      <el-menu-item index="2-1">选项1</el-menu-item>
-      <el-menu-item index="2-2">选项2</el-menu-item>
-      <el-menu-item index="2-3">选项3</el-menu-item>
-      <el-submenu index="2-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="2-4-1">选项1</el-menu-item>
-        <el-menu-item index="2-4-2">选项2</el-menu-item>
-        <el-menu-item index="2-4-3">选项3</el-menu-item>
-      </el-submenu>
+<!--      <el-menu-item index="2-1">-->
+<!--        <router-link to="/reportData/dayReport">日报</router-link>-->
+<!--      </el-menu-item>-->
+      <el-menu-item index="2-1">
+        <router-link to="/reportData/weekReport">我的报告</router-link>
+      </el-menu-item>
     </el-submenu>
 
     <el-submenu index="3">
@@ -29,18 +26,17 @@
 
       <i class="el-icon-s-comment"></i>
 
-        <span slot="title"> <el-badge :value="200" :max="99" class="item">消息中心</el-badge></span>
+        <span slot="title"> 消息中心</span>
       </template>
 
       <el-menu-item index="3-1">
-        <el-badge :value="1" :max="99" class="item">
-          系统通知
-        </el-badge>
+        <router-link to="/notice/notice">公告</router-link>
       </el-menu-item>
       <el-menu-item index="3-2">
-        <el-badge :value="1" :max="99" class="item">
-        我的消息
-        </el-badge>
+        文章回复
+      </el-menu-item>
+      <el-menu-item index="3-3">
+        答疑回复
       </el-menu-item>
 
     </el-submenu>
@@ -49,17 +45,24 @@
       <template slot="title">
         <i class="el-icon-reading"></i><span slot="title">文章</span>
       </template>
-      <el-menu-item index="3-1">选项1</el-menu-item>
-      <el-menu-item index="3-2">选项2</el-menu-item>
-      <el-menu-item index="3-3">选项3</el-menu-item>
+      <el-menu-item index="4-1">
+        <router-link to="/article/allArticle">全部文章</router-link>
+      </el-menu-item>
+      <el-menu-item index="4-2">
+        <router-link to="/article/addArticle">发布文章</router-link>
+      </el-menu-item>
     </el-submenu>
     <el-submenu index="5">
       <template slot="title">
         <i class="el-icon-edit-outline"></i><span slot="title">答疑</span>
       </template>
-      <el-menu-item index="3-1">选项1</el-menu-item>
-      <el-menu-item index="3-2">选项2</el-menu-item>
-      <el-menu-item index="3-3">选项3</el-menu-item>
+      <el-menu-item index="5-1">
+        <router-link to="/questions/questions">所有提问</router-link>
+      </el-menu-item>
+<!--      <el-menu-item index="5-2">-->
+<!--        <router-link to="/questions/myQuestions">我的提问</router-link>-->
+<!--      </el-menu-item>-->
+
     </el-submenu>
     <el-submenu index="6">
       <template slot="title">
@@ -79,24 +82,30 @@
       <el-menu-item index="7-1">
         <router-link to="/report/findReport">报告</router-link>
       </el-menu-item>
-      <el-menu-item index="7-2">签到</el-menu-item>
+      <el-menu-item index="7-2">
+      <router-link to="/notice/notice">公告</router-link>
+      </el-menu-item>
     </el-submenu>
-    <div class="search">
-      <el-form >
-        <el-input size="small" placeholder="请输入名称"
-                  suffix-icon="el-icon-search"></el-input>
-      </el-form>
-    </div>
-    <el-menu-item index="6" style="float: right;">
-    <template>
-      <div class="demo-type">
-        <div>
-          <el-avatar :src="this.avatarUrl" :size="45" ></el-avatar>
-
-        </div>
-      </div>
-    </template>
+<!--    <div class="search">-->
+<!--      <el-form >-->
+<!--        <el-input size="small" placeholder="请输入名称"-->
+<!--                  suffix-icon="el-icon-search"></el-input>-->
+<!--      </el-form>-->
+<!--    </div>-->
+    <el-submenu index="8" style="float: right;">
+      <template slot="title">
+            <el-avatar :src="userData.img" :size="45" ></el-avatar>
+      </template>
+    <el-menu-item index="8-1" >
+      <router-link to="/user/personal">个人中心</router-link>
     </el-menu-item>
+      <el-menu-item index="8-2" >
+        <router-link to="/user/changePwd">修改密码</router-link>
+      </el-menu-item>
+      <el-menu-item index="8-3" @click="logout" >
+     退出系统
+      </el-menu-item>
+    </el-submenu>
   </el-menu>
 </template>
 
@@ -129,7 +138,11 @@
                 this.userData = res.data
               }
             })
-        }
+        },
+        logout(){
+          window.sessionStorage.clear()
+          this.$router.push("/login")
+        },
       }
     }
 
@@ -165,7 +178,7 @@
   }
   a {
     text-decoration: none;
-
+    color: #2c3e50;
   }
 
 </style>

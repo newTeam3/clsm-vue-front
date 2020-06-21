@@ -2,7 +2,7 @@
 <div>
   <div class="bread">
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/test/test' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item :to="{ path: '/report/findReport' }" >我的报告</el-breadcrumb-item>
       <el-breadcrumb-item v-if="sort==0">提交日报</el-breadcrumb-item>
       <el-breadcrumb-item v-else>提交周报</el-breadcrumb-item>

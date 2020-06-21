@@ -3,9 +3,14 @@
     <el-header>
       <Topnav></Topnav>
     </el-header>
-    <el-main style="padding-top: 1px">
+    <el-main style="padding-top: 10px">
       <div class="main">
-        <h2>我的测试</h2>
+        <div class="bread">
+          <el-breadcrumb separator-class="el-icon-arrow-right">
+            <el-breadcrumb-item :to="{ path: '/test/test' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>我的试卷</el-breadcrumb-item>
+          </el-breadcrumb>
+        </div>
         <el-table
           :data="exams.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
           highlight-current-row v-loading="loading"
@@ -149,7 +154,10 @@
     background-color: white;
     height: 96%;
   }
-
+  .bread{
+    padding-top: 12px;
+    padding-left: 8px;
+  }
   .footer {
     height: 100%;
     background-color: #222c3a;

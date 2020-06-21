@@ -14,5 +14,6 @@
   .bg{
     color: white;
     line-height: 60px;
+    text-align: center;
   }
 </style>

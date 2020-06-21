@@ -34,6 +34,7 @@
   .main{
     background-color: white;
     height: 100%;
+    overflow:auto;
   }
   .footer{
     height: 100%;

@@ -163,6 +163,12 @@
 <style scoped>
   /* @import url(); 引入公共css类 */
   .login-box {
+
+    background-image: url(../assets/img/bg1.jpg);
+    background-size:100% 100%;
+    overflow: hidden;
+    background-size: cover;
+    background-repeat:no-repeat;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -184,7 +190,8 @@
     background-clip: padding-box;
     width: 350px;
     padding: 35px 35px 15px 35px;
-    background: #fff;
+    background: #cac6c6;
+    opacity: 0.8;
     border: 1px solid #eaeaea;
     box-shadow: 0 0 25px #cac6c6;
     position: absolute;

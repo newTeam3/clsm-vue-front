@@ -7,6 +7,9 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import axios from 'axios'
 import store from "./vuex/store";
+import Blob from './Excel/Blob'
+import Export2Excel from './Excel/Export2Excel.js'
+
 Vue.config.productionTip = false
 Vue.use(router);
 Vue.use(ElementUI);
