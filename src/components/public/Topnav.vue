@@ -33,10 +33,10 @@
         <router-link to="/notice/notice">公告</router-link>
       </el-menu-item>
       <el-menu-item index="3-2">
-        文章回复
+        <router-link to="/news/articleComment">文章回复</router-link>
       </el-menu-item>
       <el-menu-item index="3-3">
-        答疑回复
+        <router-link to="/news/requestComment">答疑回复</router-link>
       </el-menu-item>
 
     </el-submenu>
@@ -80,11 +80,11 @@
         <i class="el-icon-s-flag"></i><span slot="title">任务</span>
       </template>
       <el-menu-item index="7-1">
-        <router-link to="/report/findReport">报告</router-link>
+        <router-link to="/report/findReport">提交日周报</router-link>
       </el-menu-item>
-      <el-menu-item index="7-2">
-      <router-link to="/notice/notice">公告</router-link>
-      </el-menu-item>
+<!--      <el-menu-item index="7-2">-->
+<!--      <router-link to="">打卡</router-link>-->
+<!--      </el-menu-item>-->
     </el-submenu>
 <!--    <div class="search">-->
 <!--      <el-form >-->
@@ -93,6 +93,9 @@
 <!--      </el-form>-->
 <!--    </div>-->
     <el-submenu index="8" style="float: right;">
+      <template slot="title">
+       <i class="el-icon-user"></i> <span>{{userData.name}}&nbsp;&nbsp;</span>
+      </template>
       <template slot="title">
             <el-avatar :src="userData.img" :size="45" ></el-avatar>
       </template>
@@ -132,7 +135,7 @@
           getUser()
             .then(res => {
               if (res.status == 200) {
-                console.log(res.data);
+                console.log("zz"+JSON.stringify(res.data));
                 let par = JSON.stringify(res.data)
                 sessionStorage.setItem('user', par)
                 this.userData = res.data
@@ -163,12 +166,7 @@
   .logoimg {
     height: 55px;
   }
-  .search{
-    display: inline-block;
-    line-height: 60px;
-    margin-right: -250px;
 
-  }
   .el-badge__content.is-fixed {
     position: absolute;
     top: 5px;

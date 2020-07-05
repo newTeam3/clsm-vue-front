@@ -42,11 +42,6 @@
         prop="time"
         label="发布时间">
       </el-table-column>
-      <el-table-column
-        label="当前状态"
-
-        :formatter="stateFormat">
-      </el-table-column>
     </el-table>
     <Pagination v-bind:child-msg="pageparm" @callFather="callFather"></Pagination>
   </div>

@@ -15,3 +15,6 @@ export const addQuestion = (params) => {
 export const banQuestion = (params) => {
   return axios.post("/question/banQuestion",params).then(res=>res);
 };
+export const findRequestionComment = (params) => {
+  return axios.post("/question/findRequestionComment",params).then(res=>res);
+};

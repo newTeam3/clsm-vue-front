@@ -93,23 +93,30 @@
             var loginParams = { username: this.ruleForm2.username, password: this.ruleForm2.password };
             login(loginParams).then(res =>{
               this.logining = false;
-              console.log(res)
               if(res.status==200){
-                if (this.checked) {
-                        //保存帐号到cookie，有效期7天
-                        setCookie('user', this.ruleForm2.username, 7)
-                        //保存密码到cookie，有效期7天
-                        setCookie('pwd', this.ruleForm2.password, 7)
-                      } else {
-                        delCookie('user')
-                        delCookie('pwd')
-                      }
-                this.$message({
-                        message: '登录成功',
-                        type: 'success'
-                      });
-                this.$store.commit("login",res.data.token);
-                this.$router.push({ path: '/test/test' });
+                if(res.data.userVO.status==1) {
+                  console.log(res.data)
+                  if (this.checked) {
+                          //保存帐号到cookie，有效期7天
+                          setCookie('user', this.ruleForm2.username, 7)
+                          //保存密码到cookie，有效期7天
+                          setCookie('pwd', this.ruleForm2.password, 7)
+                        } else {
+                          delCookie('user')
+                          delCookie('pwd')
+                        }
+                  this.$message({
+                          message: '登录成功',
+                          type: 'success'
+                        });
+                  this.$store.commit("login",res.data.token);
+                  this.$router.push({ path: '/test/test' });
+                }else{
+                  this.$message({
+                    message: "你的账号已被封禁，请联系管理员",
+                    type: "error"
+                  });
+                }
               }else{
                 this.$message({
                   message: "登录失败",
@@ -126,9 +133,9 @@
       },
       accountTip () {
         this.$notify({
-          title: '账号：admin',
+          title: '账号：123',
           dangerouslyUseHTMLString: true,
-          message: '<strong>密码：<i>admin</i></strong>',
+          message: '<strong>密码：<i>123</i></strong>',
           type: 'success',
           position: 'bottom-left'
         })

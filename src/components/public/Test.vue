@@ -8,13 +8,12 @@
       <div>
      <ul>
        <li style=" list-style:none;text-align: center">
-         <i class="el-icon-message-solid"></i>最新公告：{{NoticeData[0].content}}--{{NoticeData[0].time}}
+         <i class="el-icon-message-solid"></i>最新公告：{{NoticeData.content}}<span style="color:  #7ec6f6">发布于:</span>{{NoticeData.time}}
 <!--         <el-button size="small" type="primary" icon="el-icon-search" @click="search">更多</el-button>-->
           <span @click="search"  class="s1">...更多</span>
        </li>
      </ul>
       </div>
-      <div class="d0">
         <div class="d1">
         <ul class="ul1">
           <li>
@@ -42,14 +41,6 @@
 <!--          </li>-->
         </ul>
         </div>
-        <div class="d3">
-          <ul>
-            <li>
-              mmjgig
-            </li>
-          </ul>
-        </div>
-      </div>
       <div class="d2">
         <el-calendar>
           <!-- 这里使用的是 2.5 slot 语法，对于新项目请使用 2.6 slot 语法-->
@@ -66,7 +57,7 @@
 </template>
 
 <script>
-  import { findUserByID } from '../../api/User'
+  import { findUserByID,getUser } from '../../api/User'
   import { getAllNotice } from '../../api/Notice'
     export default {
         name: "Test",
@@ -78,16 +69,34 @@
       },
       created() {
         this.getNotice()
-        let userId = JSON.parse(sessionStorage.getItem("user"))
-        let param={id:userId.id}
-        this.getData(param)
+
+        this.getUserData()
+
+        // let userId = JSON.parse(sessionStorage.getItem("user"))
+        // let param={id:userId.id}
+        //
+        // this.getData(param)
+
       },
       methods:{
-      async  getNotice(){
+     async getUserData(){
+       getUser()
+         .then(res => {
+           if (res.status == 200) {
+             console.log("zz"+JSON.stringify(res.data));
+             let par = JSON.stringify(res.data.id)
+             let p={id:par}
+             console.log(p)
+             this.getData(p)
+
+           }
+         })
+     } ,
+      async getNotice(){
           let par={page:1,rows:5}
           getAllNotice(par).then(res=>{
             if(res.status==200){
-              this.NoticeData=res.data.list
+              this.NoticeData=res.data.list[0]
             }
           })
         },
@@ -95,7 +104,7 @@
           findUserByID(param).then(res=>{
             if(res.status==200){
               this.userData=res.data
-              console.log("user"+JSON.stringify(this.userData))
+              console.log("user"+JSON.stringify(res.data))
             }
           })
         },
@@ -135,6 +144,7 @@
     margin-left: 200px;
   }
   .d1{
+    display: inline;
     margin-top: 100px;
     height: 350px;
     background: rgba(255, 255, 255, .3);
@@ -147,11 +157,8 @@
     margin-left: 200px;
     /*opacity: 0.8;*/
   }
-  .d3{
-    background-color: #ca30b1;
-  }
   .d2{
-    margin-top: 20px;
+    margin-top: 40px;
     background-color: darkturquoise;
     height: 400px;
     display: inline;float:right;

@@ -27,3 +27,9 @@ export const addComments = (params) => {
 export const addReply = (params) => {
   return axios.post("/article/addReply",params).then(res=>res);
 };
+export const getReply = (params) => {
+  return axios.post("/article/getReply",params).then(res=>res);
+};
+export const getArticleComment = (params) => {
+  return axios.post("/article/getArticleComment",params).then(res=>res);
+};

@@ -37,3 +37,8 @@ export const send = (params) => {
 export const changePwd = (params) => {
   return axios.post("/user/changePwd",params).then(res=>res);
 };
+export const getTotalData = (params) => {
+  return axios.get("/user/getTotalData",{
+    params:params
+  }).then(res=>res);
+};

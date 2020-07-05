@@ -30,12 +30,15 @@ import WeekReport from "../components/reportData/WeekReport";
 import Personal from "../components/user/Personal";
 import ReportItem from "../components/reportData/ReportItem";
 import ChangePwd from "../components/user/ChangePwd";
+
+import ArticleComment from "../components/news/ArticleComment";
+import RequestComment from "../components/news/RequestComment";
 Vue.use(Router);
 
 export default new Router({
     mode:'history',
   routes:[
-
+  //首页
     {
       path:'/index',
       name:'Index',
@@ -60,6 +63,8 @@ export default new Router({
         {path:'/user/personal',name:'Personal',component:Personal},
         {path:'/reportData/reportItem',name:'ReportItem',component:ReportItem},
         {path:'/user/changePwd',name:'ChangePwd',component:ChangePwd},
+        {path:'/news/articleComment',name:'ArticleComment',component:ArticleComment},
+        {path:'/news/requestComment',name:'RequestComment',component:RequestComment},
         {
           path:'/Answer/Answer',
           component:Answer
@@ -71,6 +76,7 @@ export default new Router({
       ]
 
     },
+    //登录页面
     {
       path:'/login',
       name:'login',

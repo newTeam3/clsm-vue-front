@@ -8,7 +8,7 @@
   </div>
   <div style="margin-top: 20px;margin-bottom: 20px;margin-left: 450px">
   <el-button size="small" type="primary" icon="el-icon-edit" @click="handleEdit">编辑资料</el-button>
-  <el-button size="small" type="warning" icon="el-icon-upload2" @click="handleEdit2" >上传头像</el-button>
+
   </div>
     <div class="d1">
 <ul class="ul1" style="list-style: none;text-align: left;">
@@ -42,7 +42,9 @@
   </li>
   <li>
     角色：<span v-for="i in userData.roles">
-            {{i.roleName}}&nbsp;
+             <span v-show="i.roleName=='ROLE_root'">超级管理员</span>
+          <span v-show="i.roleName=='ROLE_admin'">管理员</span>
+           <span v-show="i.roleName=='ROLE_user'">用户</span>
           </span>
   </li>
 </ul>
@@ -56,22 +58,19 @@
       您的账号创建时间：{{userData.created}}
     </li>
     <li>
-      您的报告提交总数：<strong>3</strong>
+      您的报告提交总数：<strong>{{totalData.mesTotal}}</strong>
     </li>
     <li>
-      您的文章发布总数：<strong>3</strong>
+      您的文章发布总数：<strong>{{totalData.artTotal}}</strong>
     </li>
     <li>
-      您的文章总阅读数：<strong>3</strong>
+      您的文章总阅读数：<strong>{{totalData.quanTotal}}</strong>
     </li>
     <li>
-      您的文章评价总数：<strong>3</strong>
+      您的文章评价总数：<strong>{{totalData.comTotal}}</strong>
     </li>
     <li>
-      您的提问发布总数：<strong>3</strong>
-    </li>
-    <li>
-      您的评价总条数：<strong>3</strong>
+      您的提问发布总数：<strong>{{totalData.questionTotal}}</strong>
     </li>
   </ul>
   </div>
@@ -147,7 +146,7 @@
           class="avatar-upload img"
           action="http://localhost:8080/filesystem/upload"
           name="file"
-          :auto-upload="false"
+          :auto-upload="true"
           :headers="token"
           :show-file-list="true"
           :on-success="handleAvatarSuccess"
@@ -175,7 +174,7 @@
 </template>
 
 <script>
-  import { findUserByID,getSearchData,updateUser } from '../../api/User'
+  import { findUserByID,getSearchData,updateUser,getUser,getTotalData } from '../../api/User'
     export default {
         name: "Personal",
       data(){
@@ -189,6 +188,7 @@
             loading:false,
             selectData:[],
             userData:[],
+            totalData:[],
             editFormVisible:false,
             editFormVisible2:false,
             editForm: {
@@ -228,6 +228,7 @@
         let param={id:userId.id}
         this.getData(param)
         this.getSearch()
+        this.getTotal(param)
       },
       methods:{
         currentSel(){
@@ -237,7 +238,7 @@
            findUserByID(param).then(res=>{
               if(res.status==200){
                 this.userData=res.data
-                // console.log("user"+JSON.stringify(this.userData))
+                console.log("user"+JSON.stringify(this.userData))
               }
            })
           },
@@ -252,6 +253,13 @@
         handlePictureCardPreview(file) {
           this.dialogImageUrl = file.url;
 
+        },
+        async getTotal(param){
+          getTotalData(param).then(res=>{
+            if(res.status==200){
+              this.totalData=res.data
+            }
+          })
         },
         handleAvatarSuccess(res,file){
           this.imageUrl=URL.createObjectURL(file.raw)
